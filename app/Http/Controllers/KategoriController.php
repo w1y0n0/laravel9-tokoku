@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kategori;
+// use Yajra\DataTables\DataTables;
 
 class KategoriController extends Controller
 {
@@ -20,7 +21,21 @@ class KategoriController extends Controller
     // Method untuk menampilkan data kategori
     public function data()
     {
+        $kategori = Kategori::orderBy('id_kategori', 'DESC')->get();
 
+        return datatables()
+            ->of($kategori)
+            ->addIndexColumn()
+            ->addColumn('aksi', function($kategori){
+                return '
+                <div class="btn-group">
+                    <button onclick="editForm(`'. route('kategori.update', $kategori->id_kategori) .'`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button onclick="deleteData(`'. route('kategori.destroy', $kategori->id_kategori) .'`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
+                </div>
+                ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
     /**
@@ -45,7 +60,7 @@ class KategoriController extends Controller
         $kategori->nama_kategori = $request->nama_kategori;
         $kategori->save();
 
-        return response()->json('Data berhasil disimpan.', 200);
+        return response()->json(['message' =>'Data berhasil disimpan.']);
     }
 
     /**
@@ -56,7 +71,9 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        //
+        $kategori = Kategori::find($id);
+
+        return response()->json($kategori);
     }
 
     /**
@@ -79,7 +96,11 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->nama_kategori = $request->nama_kategori;
+        $kategori->update();
+
+        return response()->json(['message' => 'Data berhasil diubah.']);
     }
 
     /**
@@ -90,6 +111,9 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->delete();
+
+        return response()->json(['message' => 'Data berhasil dihapus.']);
     }
 }

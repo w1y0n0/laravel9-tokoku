@@ -2,9 +2,9 @@
      <!-- Logo -->
      <a href="index2.html" class="logo">
          <!-- mini logo for sidebar mini 50x50 pixels -->
-         <span class="logo-mini"><b>A</b>LT</span>
+         <span class="logo-mini"><b>POS</b></span>
          <!-- logo for regular state and mobile devices -->
-         <span class="logo-lg"><b>Admin</b>LTE</span>
+         <span class="logo-lg"><b>P</b>oint <b>O</b>f <b>S</b>ale</span>
      </a>
      <!-- Header Navbar: style can be found in header.less -->
      <nav class="navbar navbar-static-top">
@@ -20,7 +20,7 @@
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                          <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image"
                              alt="User Image">
-                         <span class="hidden-xs">Alexander Pierce</span>
+                         <span class="hidden-xs">Mas Wi</span>
                      </a>
                      <ul class="dropdown-menu">
                          <!-- User image -->
@@ -29,7 +29,7 @@
                                  alt="User Image">
 
                              <p>
-                                 Alexander Pierce - Web Developer
+                                 Mas Wi - Web Developer
                                  <small>Member since Nov. 2012</small>
                              </p>
                          </li>
