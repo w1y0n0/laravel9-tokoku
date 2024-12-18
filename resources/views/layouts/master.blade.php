@@ -9,24 +9,24 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{ asset('/AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('/AdminLTE-2/bower_components/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE-2/bower_components/font-awesome/css/font-awesome.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('/AdminLTE-2/dist/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE-2/dist/css/AdminLTE.min.css') }}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ asset('/AdminLTE-2/dist/css/skins/_all-skins.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE-2/dist/css/skins/_all-skins.min.css') }}">
     <!-- DataTables -->
     <link rel="stylesheet"
-        href="{{ asset('/AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+        href="{{ asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"> --}}
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"> --}}
 
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet"
-        href="{{ asset('/AdminLTE-2/bower_components/datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css') }}">
+        href="{{ asset('AdminLTE-2/bower_components/datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css') }}">
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/colvis/1.5.6/css/dataTables.colVis.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
@@ -44,10 +44,26 @@
 
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/preloader.css') }}">
 </head>
 
 <body class="hold-transition skin-purple-light sidebar-mini">
-    <div class="wrapper">
+    <!-- Preloader Overlay -->
+    <div class="preloader-overlay"></div>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader">
+            {{-- <div class="bounce bounce1"></div> --}}
+            <div class="bounce bounce2"></div>
+            <div class="bounce bounce3"></div>
+            <div class="bounce bounce4"></div>
+        </div>
+    </div>
+    <!-- /.Preloader -->
+
+    <div class="wrapper" id="app">
 
         <!-- HEADER -->
         @includeIf('layouts.header')
@@ -115,12 +131,31 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
+    <!-- Preloader -->
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var preloader = document.querySelector('.preloader');
+            var preloaderOverlay = document.querySelector('.preloader-overlay');
+            // var app = document.getElementById('app');
+
+            // app.style.visibility = 'hidden';
+            preloader.style.visibility = 'visible';
+            preloaderOverlay.style.visibility = 'visible';
+
+            setTimeout(function() {
+                preloader.style.visibility = 'hidden';
+                preloaderOverlay.style.visibility = 'hidden';
+                // app.style.visibility = 'visible';
+            }, 2000); // Menampilkan preloader selama 2 detik
+        });
+    </script>
+
+    {{-- <script>
         function preview(selector, temporaryFile, width = 200) {
             $(selector).empty();
             $(selector).append(`<img src="${window.URL.createObjectURL(temporaryFile)}" width="${width}">`);
         }
-    </script>
+    </script> --}}
 
     @stack('scripts')
 </body>
