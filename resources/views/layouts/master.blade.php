@@ -146,7 +146,7 @@
                 preloader.style.visibility = 'hidden';
                 preloaderOverlay.style.visibility = 'hidden';
                 // app.style.visibility = 'visible';
-            }, 2000); // Menampilkan preloader selama 2 detik
+            }, 1000); // Menampilkan preloader selama 1 detik
         });
     </script>
 
