@@ -55,3 +55,13 @@ function tanggal_indonesia($tgl, $tampil_hari = true)
     
     return $text; 
 }
+
+/**
+ * Fungsi untuk menambahkan nol didepan angka
+ * ex: tambah_nol_didepan(5, 3) => 005
+ * ex: tambah_nol_didepan(10, 5) => 00010
+ */
+function tambah_nol_didepan($value, $threshold = null)
+{
+    return sprintf("%0".$threshold."s", $value);
+}

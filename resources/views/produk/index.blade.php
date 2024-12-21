@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Kategori
+    Daftar Produk
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Daftar Kategori</li>
+    <li class="active">Daftar Produk</li>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <button onclick="addForm('{{ route('kategori.store') }}')" class="btn btn-success btn-xs btn-flat"
+                    <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"
                         data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i>
                         Tambah</button>
                 </div>
@@ -22,8 +22,15 @@
                     <table id="myTable" class="table table-striped table-bordered">
                         <thead>
                             <th width="5%">No</th>
+                            <th>Kode Produk</th>
+                            <th>Nama Produk</th>
                             <th>Kategori</th>
-                            <th width="10%"><i class="fa fa-cog"></i></th>
+                            <th>Merk</th>
+                            <th>Harga Beli</th>
+                            <th>Harga Jual</th>
+                            <th>Diskon</th>
+                            <th>Stok</th>
+                            <th width="7%"><i class="fa fa-cog"></i></th>
                         </thead>
                     </table>
                 </div>
@@ -31,7 +38,7 @@
         </div>
     </div>
 
-    @includeIf('kategori.form')
+    @includeIf('produk.form')
 @endsection
 
 @push('scripts')
@@ -55,27 +62,25 @@
                     }
                 ],
                 ajax: {
-                    url: '{{ route('kategori.data') }}',
+                    url: '{{ route('produk.data') }}',
                 },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        searchable: false,
-                        sortable: false
-                    },
-                    {
-                        data: 'nama_kategori'
-                    },
-                    {
-                        data: 'aksi',
-                        searchable: false,
-                        sortable: false
-                    }
+                columns: [
+                    { data: 'DT_RowIndex', searchable: false, sortable: false },
+                    { data: 'kode_produk' },
+                    { data: 'nama_produk' },
+                    { data: 'nama_kategori' },
+                    { data: 'merk' },
+                    { data: 'harga_beli' },
+                    { data: 'harga_jual' },
+                    { data: 'diskon' },
+                    { data: 'stok' },
+                    { data: 'aksi', searchable: false, sortable: false },
                 ],
             });
 
-            // Fokus ke input saat modal ditampilkan
+            // Fokus ke input pertama saat modal ditampilkan
             $('#modal-form').on('shown.bs.modal', function() {
-                $('#nama_kategori').focus();
+                $('#nama_produk').focus();
             });
 
             $('#modal-form').validator().on('submit', function(e) {
@@ -103,28 +108,34 @@
         // Fungsi untuk membuka modal tambah form
         function addForm(url) {
             $('#modal-form').modal('show'); // Menampilkan modal
-            $('#modal-form .modal-title').text('Tambah Kategori'); // Set judul modal
+            $('#modal-form .modal-title').text('Tambah Produk'); // Set judul modal
 
             $('#modal-form form')[0].reset(); // Reset form pada modal
             $('#modal-form form').attr('action', url); // Set URL form action dengan URL pada parameter
             $('#modal-form [name=_method]').val('post'); // Isi value dari input [name=_method] dengan 'post'
-            $('#modal-form [name=nama_kategori]').focus(); // Fokus ke input [name=nama_kategori]
+            $('#modal-form [name=nama_produk]').focus(); // Fokus ke input [name=nama_produk]
         }
 
         // Fungsi untuk membuka modal edit form
         function editForm(url) {
             $('#modal-form').modal('show'); // Menampilkan modal
-            $('#modal-form .modal-title').text('Edit Kategori'); // Set judul modal
+            $('#modal-form .modal-title').text('Edit Produk'); // Set judul modal
 
             $('#modal-form form')[0].reset(); // Reset form pada modal
             $('#modal-form form').attr('action', url); // Set URL form action dengan URL pada parameter
             $('#modal-form [name=_method]').val('put'); // Isi value dari input [name=_method] dengan 'post'
-            $('#modal-form [name=nama_kategori]').focus(); // Fokus ke input [name=nama_kategori]
+            $('#modal-form [name=nama_produk]').focus(); // Fokus ke input [name=nama_produk]
 
             $.get(url) // Ambil data dari URL pada parameter
                 .done((response) => {
-                    $('#modal-form [name=nama_kategori]').val(response
-                        .nama_kategori); // Isi value dari input [name=nama_kategori] dengan data nama_kategori
+                    $('#modal-form [name=nama_produk]').val(response.nama_produk);
+                    $('#modal-form [name=kode_produk]').val(response.kode_produk);
+                    $('#modal-form [name=id_kategori]').val(response.id_kategori);
+                    $('#modal-form [name=merk]').val(response.merk);
+                    $('#modal-form [name=harga_beli]').val(response.harga_beli);
+                    $('#modal-form [name=harga_jual]').val(response.harga_jual);
+                    $('#modal-form [name=diskon]').val(response.diskon);
+                    $('#modal-form [name=stok]').val(response.stok);
                 })
                 .fail((errors) => {
                     console.log(errors);
