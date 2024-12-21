@@ -21,6 +21,9 @@
                 <div class="box-body table-responsive">
                     <table id="myTable" class="table table-striped table-bordered">
                         <thead>
+                            <th>
+                                <input type="checkbox" name="select_all" id="select_all">
+                            </th>
                             <th width="5%">No</th>
                             <th>Kode Produk</th>
                             <th>Nama Produk</th>
@@ -65,6 +68,7 @@
                     url: '{{ route('produk.data') }}',
                 },
                 columns: [
+                    { data: 'select_all', searchable: false, sortable: false },
                     { data: 'DT_RowIndex', searchable: false, sortable: false },
                     { data: 'kode_produk' },
                     { data: 'nama_produk' },
@@ -102,6 +106,13 @@
                         });
                 }
             });
+
+            $('[name=select_all]').on('click', function() {
+                $(':checkbox').prop('checked', this.checked);
+            });
+            // $('#select_all').on('click', function() {
+                // $('input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+            // });
         });
 
         // Deklarasikan fungsi di global scope

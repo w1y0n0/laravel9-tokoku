@@ -31,6 +31,9 @@ class ProdukController extends Controller
         return datatables()
             ->of($produk)
             ->addIndexColumn()
+            ->addColumn('select_all', function($produk){
+                return '<input type="checkbox" name="id_produk[]" value="'. $produk->id_produk .'">';
+            })
             ->addColumn('kode_produk', function($produk){
                 return '<span class="label label-success">'. $produk->kode_produk .'</span>';
             })
@@ -51,7 +54,7 @@ class ProdukController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['aksi','kode_produk'])
+            ->rawColumns(['aksi','kode_produk','select_all'])
             ->make(true);
     }
 
