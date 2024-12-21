@@ -14,28 +14,33 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"
-                        data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i>
-                        Tambah</button>
+                    <div class="btn-group">
+                        <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"
+                            data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i> Tambah</button>
+                        <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                    </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table id="myTable" class="table table-striped table-bordered">
-                        <thead>
-                            <th>
-                                <input type="checkbox" name="select_all" id="select_all">
-                            </th>
-                            <th width="5%">No</th>
-                            <th>Kode Produk</th>
-                            <th>Nama Produk</th>
-                            <th>Kategori</th>
-                            <th>Merk</th>
-                            <th>Harga Beli</th>
-                            <th>Harga Jual</th>
-                            <th>Diskon</th>
-                            <th>Stok</th>
-                            <th width="7%"><i class="fa fa-cog"></i></th>
-                        </thead>
-                    </table>
+                    <form action="" class="form-produk">
+                        @csrf
+                        <table id="myTable" class="table table-striped table-bordered">
+                            <thead>
+                                <th>
+                                    <strong><input type="checkbox" name="select_all" id="select_all"></strong>
+                                </th>
+                                <th width="5%">No</th>
+                                <th>Kode Produk</th>
+                                <th>Nama Produk</th>
+                                <th>Kategori</th>
+                                <th>Merk</th>
+                                <th>Harga Beli</th>
+                                <th>Harga Jual</th>
+                                <th>Diskon</th>
+                                <th>Stok</th>
+                                <th width="7%"><i class="fa fa-cog"></i></th>
+                            </thead>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -188,9 +193,55 @@
                                 'Tidak dapat menghapus data.',
                                 'error'
                             );
+                            return;
                         });
                 }
             });
+        }
+
+        // Fungsi untuk menghapus data yang dipilih
+        function deleteSelected(url) {
+            if ($('input:checked').length > 1) {
+                Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post(url, $('.form-produk').serialize())
+                        .done((response) => {
+                            Swal.fire(
+                                'Terhapus!',
+                                response.message,
+                                'success'
+                            );
+                            table.ajax.reload();
+                        })
+                        .fail((errors) => {
+                            console.log(errors);
+                            Swal.fire(
+                                'Gagal!',
+                                'Tidak dapat menghapus data.',
+                                'error'
+                            );
+                            return;
+                        });
+                    }
+                });
+            }else{
+                // alert('Pilih data yang akan dihapus!');
+                Swal.fire(
+                    'Informasi!',
+                    'Pilih data yang akan dihapus.',
+                    'info'
+                );
+                return;
+            }
         }
     </script>
 @endpush

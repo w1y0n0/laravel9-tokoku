@@ -136,4 +136,20 @@ class ProdukController extends Controller
 
         return response()->json(['message' => 'Data berhasil dihapus.']);
     }
+
+    // Method untuk menghapus data produk yang dipilih
+    public function delete_selected(Request $request)
+    {
+        // $produk = Produk::whereIn('id_produk', $request->id_produk)->delete();
+        // return response()->json(['message' => count($request->id_produk) .' data berhasil dihapus.']);
+        // $count = 0;
+        foreach ($request->id_produk as $id) {
+            $produk = Produk::find($id);
+            $produk->delete();
+            // $count++;
+            // return $produk;
+        }
+
+        return response()->json(['message' => count($request->id_produk) .' data berhasil dihapus.']);
+    }
 }

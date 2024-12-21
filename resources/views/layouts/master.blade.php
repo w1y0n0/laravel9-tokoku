@@ -55,10 +55,10 @@
     <!-- Preloader -->
     <div class="preloader">
         <div class="loader">
-            {{-- <div class="bounce bounce1"></div> --}}
+            <div class="bounce bounce1"></div>
             <div class="bounce bounce2"></div>
             <div class="bounce bounce3"></div>
-            <div class="bounce bounce4"></div>
+            {{-- <div class="bounce bounce4"></div> --}}
         </div>
     </div>
     <!-- /.Preloader -->
