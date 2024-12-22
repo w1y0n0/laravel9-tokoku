@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use App\Models\Produk;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -93,6 +94,9 @@ class ProdukController extends Controller
     public function show($id)
     {
         $produk = Produk::find($id);
+        if (!$produk) {
+            return response()->json(['message' => 'Produk tidak ditemukan.'], 404);
+        }
 
         return response()->json($produk);
     }
@@ -140,16 +144,32 @@ class ProdukController extends Controller
     // Method untuk menghapus data produk yang dipilih
     public function delete_selected(Request $request)
     {
-        // $produk = Produk::whereIn('id_produk', $request->id_produk)->delete();
-        // return response()->json(['message' => count($request->id_produk) .' data berhasil dihapus.']);
+        $produk = Produk::whereIn('id_produk', $request->id_produk)->delete();
+        return response()->json(['message' => count($request->id_produk) .' data berhasil dihapus.']);
+        
         // $count = 0;
+        // foreach ($request->id_produk as $id) {
+        //     $produk = Produk::find($id);
+        //     $produk->delete();
+        //     $count++;
+        //     return $produk;
+        // }
+        // return response()->json(['message' => count($request->id_produk) .' data berhasil dihapus.']);
+    }
+
+    // Method untuk mencetak barcode produk
+    public function cetak_barcode(Request $request)
+    {
+        // return $request;
+        $dataproduk = array();
         foreach ($request->id_produk as $id) {
             $produk = Produk::find($id);
-            $produk->delete();
-            // $count++;
-            // return $produk;
+            $dataproduk[] = $produk;
         }
-
-        return response()->json(['message' => count($request->id_produk) .' data berhasil dihapus.']);
+        // return $dataproduk;
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('produk.barcode', compact('dataproduk'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('produk-barcode.pdf');
     }
 }

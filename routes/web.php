@@ -23,5 +23,6 @@ Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategor
 Route::resource('/kategori', KategoriController::class);
 
 Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data');
-Route::post('/produk/delete_selected', [ProdukController::class, 'delete_selected'])->name('produk.delete_selected');
+Route::post('/produk/delete_selected', [ProdukController::class, 'delete_selected'])->name('produk.deleteSelected');
+Route::post('/produk/cetak_barcode', [ProdukController::class, 'cetak_barcode'])->name('produk.cetakBarcode');
 Route::resource('/produk', ProdukController::class);

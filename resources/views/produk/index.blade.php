@@ -17,11 +17,12 @@
                     <div class="btn-group">
                         <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"
                             data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i> Tambah</button>
-                        <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                        <button onclick="deleteSelected('{{ route('produk.deleteSelected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                        <button onclick="cetakBarcode('{{ route('produk.cetakBarcode') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
                     </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <form action="" class="form-produk">
+                    <form action="" method="post" class="form-produk">
                         @csrf
                         <table id="myTable" class="table table-striped table-bordered">
                             <thead>
@@ -241,6 +242,32 @@
                     'info'
                 );
                 return;
+            }
+        }
+
+        // Fungsi untuk mencetak barcode
+        function cetakBarcode(url) {
+            if ($('input:checked').length < 1) {
+                // alert('Pilih data yang akan dicetak!');
+                Swal.fire(
+                    'Informasi!',
+                    'Pilih data yang akan dicetak.',
+                    'info'
+                );
+                return;
+            } else if ($('input:checked').length < 3) {
+                // alert('Pilih minimal 3 data untuk dicetak!');
+                Swal.fire(
+                    'Informasi!',
+                    'Pilih minimal 3 data untuk dicetak.',
+                    'info'
+                );
+                return;
+            } else {
+                $('.form-produk')
+                    .attr('target', '_blank')
+                    .attr('action', url)
+                    .submit();
             }
         }
     </script>
