@@ -144,7 +144,7 @@
             @foreach ($datamember as $key => $data)
                 <tr>
                     @foreach ($data as $item)
-                        <td class="text-center" width="50%">
+                        <td class="text-center">
                             <div class="box">
                                 <img src="{{ asset('img/member.png') }}" alt="card">
                                 <div class="logo">
