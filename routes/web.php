@@ -3,6 +3,7 @@
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,3 +32,6 @@ Route::resource('/produk', ProdukController::class);
 Route::get('/member/data', [MemberController::class, 'data'])->name('member.data');
 Route::post('/member/cetak_member', [MemberController::class, 'cetak_member'])->name('member.cetakMember');
 Route::resource('/member', MemberController::class);
+
+Route::get('/supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
+Route::resource('/supplier', SupplierController::class);
