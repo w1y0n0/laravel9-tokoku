@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('member', function (Blueprint $table) {
             $table->increments('id_member');
             $table->string('kode_member', 25)->unique();
-            $table->string('nama', 50);
+            $table->string('nama_member', 50);
             $table->text('alamat')->nullable();
             $table->string('telepon', 13);
             $table->timestamps();

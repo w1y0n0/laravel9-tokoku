@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,7 @@ Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data
 Route::post('/produk/delete_selected', [ProdukController::class, 'delete_selected'])->name('produk.deleteSelected');
 Route::post('/produk/cetak_barcode', [ProdukController::class, 'cetak_barcode'])->name('produk.cetakBarcode');
 Route::resource('/produk', ProdukController::class);
+
+Route::get('/member/data', [MemberController::class, 'data'])->name('member.data');
+Route::post('/member/cetak_member', [MemberController::class, 'cetak_member'])->name('member.cetakMember');
+Route::resource('/member', MemberController::class);

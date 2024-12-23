@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Produk
+    Daftar Member
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Daftar Produk</li>
+    <li class="active">Daftar Member</li>
 @endsection
 
 @section('content')
@@ -14,15 +14,13 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="btn-group">
-                        <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"
-                            data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i> Tambah</button>
-                        <button onclick="deleteSelected('{{ route('produk.deleteSelected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
-                        <button onclick="cetakBarcode('{{ route('produk.cetakBarcode') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
-                    </div>
+                    <button onclick="addForm('{{ route('member.store') }}')" class="btn btn-success btn-xs btn-flat"
+                        data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i>
+                        Tambah</button>
+                    <button onclick="cetakMember('{{ route('member.cetakMember') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-id-card"></i> Cetak Member</button>
                 </div>
                 <div class="box-body table-responsive">
-                    <form action="" method="post" class="form-produk">
+                    <form action="" method="post" class="form-member">
                         @csrf
                         <table id="myTable" class="table table-striped table-bordered">
                             <thead>
@@ -30,15 +28,11 @@
                                     <strong><input type="checkbox" name="select_all" id="select_all"></strong>
                                 </th>
                                 <th width="5%">No</th>
-                                <th>Kode Produk</th>
-                                <th>Nama Produk</th>
-                                <th>Kategori</th>
-                                <th>Merk</th>
-                                <th>Harga Beli</th>
-                                <th>Harga Jual</th>
-                                <th>Diskon</th>
-                                <th>Stok</th>
-                                <th width="7%"><i class="fa fa-cog"></i></th>
+                                <th>Kode Member</th>
+                                <th>Nama Member</th>
+                                <th>Telepon</th>
+                                <th>Alamat</th>
+                                <th width="10%"><i class="fa fa-cog"></i></th>
                             </thead>
                         </table>
                     </form>
@@ -47,7 +41,7 @@
         </div>
     </div>
 
-    @includeIf('produk.form')
+    @includeIf('member.form')
 @endsection
 
 @push('scripts')
@@ -71,26 +65,22 @@
                     }
                 ],
                 ajax: {
-                    url: '{{ route('produk.data') }}',
+                    url: '{{ route('member.data') }}',
                 },
                 columns: [
-                    { data: 'select_all', searchable: false, sortable: false },
-                    { data: 'DT_RowIndex', searchable: false, sortable: false },
-                    { data: 'kode_produk' },
-                    { data: 'nama_produk' },
-                    { data: 'nama_kategori' },
-                    { data: 'merk' },
-                    { data: 'harga_beli' },
-                    { data: 'harga_jual' },
-                    { data: 'diskon' },
-                    { data: 'stok' },
-                    { data: 'aksi', searchable: false, sortable: false },
+                    {data: 'select_all', searchable: false, sortable: false},
+                    {data: 'DT_RowIndex', searchable: false, sortable: false},
+                    {data: 'kode_member'},
+                    {data: 'nama_member'},
+                    {data: 'telepon'},
+                    {data: 'alamat'},
+                    {data: 'aksi', searchable: false, sortable: false}
                 ],
             });
 
-            // Fokus ke input pertama saat modal ditampilkan
+            // Fokus ke input saat modal ditampilkan
             $('#modal-form').on('shown.bs.modal', function() {
-                $('#nama_produk').focus();
+                $('#nama_member').focus();
             });
 
             $('#modal-form').validator().on('submit', function(e) {
@@ -116,42 +106,35 @@
             $('[name=select_all]').on('click', function() {
                 $(':checkbox').prop('checked', this.checked);
             });
-            // $('#select_all').on('click', function() {
-                // $('input[type="checkbox"]').prop('checked', $(this).prop('checked'));
-            // });
         });
 
         // Deklarasikan fungsi di global scope
         // Fungsi untuk membuka modal tambah form
         function addForm(url) {
             $('#modal-form').modal('show'); // Menampilkan modal
-            $('#modal-form .modal-title').text('Tambah Produk'); // Set judul modal
+            $('#modal-form .modal-title').text('Tambah Member'); // Set judul modal
 
             $('#modal-form form')[0].reset(); // Reset form pada modal
             $('#modal-form form').attr('action', url); // Set URL form action dengan URL pada parameter
             $('#modal-form [name=_method]').val('post'); // Isi value dari input [name=_method] dengan 'post'
-            $('#modal-form [name=nama_produk]').focus(); // Fokus ke input [name=nama_produk]
+            $('#modal-form [name=nama_member]').focus(); // Fokus ke input [name=nama_member]
         }
 
         // Fungsi untuk membuka modal edit form
         function editForm(url) {
             $('#modal-form').modal('show'); // Menampilkan modal
-            $('#modal-form .modal-title').text('Edit Produk'); // Set judul modal
+            $('#modal-form .modal-title').text('Edit Member'); // Set judul modal
 
             $('#modal-form form')[0].reset(); // Reset form pada modal
             $('#modal-form form').attr('action', url); // Set URL form action dengan URL pada parameter
             $('#modal-form [name=_method]').val('put'); // Isi value dari input [name=_method] dengan 'post'
-            $('#modal-form [name=nama_produk]').focus(); // Fokus ke input [name=nama_produk]
+            $('#modal-form [name=nama_member]').focus(); // Fokus ke input [name=nama_member]
 
             $.get(url) // Ambil data dari URL pada parameter
                 .done((response) => {
-                    $('#modal-form [name=nama_produk]').val(response.nama_produk);
-                    $('#modal-form [name=id_kategori]').val(response.id_kategori);
-                    $('#modal-form [name=merk]').val(response.merk);
-                    $('#modal-form [name=harga_beli]').val(response.harga_beli);
-                    $('#modal-form [name=harga_jual]').val(response.harga_jual);
-                    $('#modal-form [name=diskon]').val(response.diskon);
-                    $('#modal-form [name=stok]').val(response.stok);
+                    $('#modal-form [name=nama_member]').val(response.nama_member);
+                    $('#modal-form [name=telepon]').val(response.telepon);
+                    $('#modal-form [name=alamat]').val(response.alamat);
                 })
                 .fail((errors) => {
                     console.log(errors);
@@ -193,59 +176,13 @@
                                 'Tidak dapat menghapus data.',
                                 'error'
                             );
-                            return;
                         });
                 }
             });
         }
 
-        // Fungsi untuk menghapus data yang dipilih
-        function deleteSelected(url) {
-            if ($('input:checked').length > 1) {
-                Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Data yang dihapus tidak dapat dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.post(url, $('.form-produk').serialize())
-                        .done((response) => {
-                            Swal.fire(
-                                'Terhapus!',
-                                response.message,
-                                'success'
-                            );
-                            table.ajax.reload();
-                        })
-                        .fail((errors) => {
-                            console.log(errors);
-                            Swal.fire(
-                                'Gagal!',
-                                'Tidak dapat menghapus data.',
-                                'error'
-                            );
-                            return;
-                        });
-                    }
-                });
-            }else{
-                // alert('Pilih data yang akan dihapus!');
-                Swal.fire(
-                    'Informasi!',
-                    'Pilih data yang akan dihapus.',
-                    'info'
-                );
-                return;
-            }
-        }
-
-        // Fungsi untuk mencetak barcode
-        function cetakBarcode(url) {
+        // Fungsi untuk mencetak data member
+        function cetakMember(url) {
             if ($('input:checked').length < 1) {
                 // alert('Pilih data yang akan dicetak!');
                 Swal.fire(
@@ -254,16 +191,8 @@
                     'info'
                 );
                 return;
-            } else if ($('input:checked').length < 3) {
-                // alert('Pilih minimal 3 data untuk dicetak!');
-                Swal.fire(
-                    'Informasi!',
-                    'Pilih minimal 3 data untuk dicetak.',
-                    'info'
-                );
-                return;
             } else {
-                $('.form-produk')
+                $('.form-member')
                     .attr('target', '_blank')
                     .attr('action', url)
                     .submit();
