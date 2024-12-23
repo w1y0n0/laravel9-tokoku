@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -35,3 +36,6 @@ Route::resource('/member', MemberController::class);
 
 Route::get('/supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
 Route::resource('/supplier', SupplierController::class);
+
+Route::get('/pengeluaran/data', [PengeluaranController::class, 'data'])->name('pengeluaran.data');
+Route::resource('/pengeluaran', PengeluaranController::class);

@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Supplier
+    Daftar Pengeluaran
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Daftar Supplier</li>
+    <li class="active">Daftar Pengeluaran</li>
 @endsection
 
 @section('content')
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <button onclick="addForm('{{ route('supplier.store') }}')" class="btn btn-success btn-xs btn-flat"
+                    <button onclick="addForm('{{ route('pengeluaran.store') }}')" class="btn btn-success btn-xs btn-flat"
                         data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i>
                         Tambah</button>
                 </div>
@@ -22,9 +22,9 @@
                     <table id="myTable" class="table table-striped table-bordered">
                         <thead>
                             <th width="5%">No</th>
-                            <th>Nama</th>
-                            <th>Telepon</th>
-                            <th>Alamat</th>
+                            <th>Tanggal</th>
+                            <th>Deskripsi</th>
+                            <th>Nominal</th>
                             <th width="10%"><i class="fa fa-cog"></i></th>
                         </thead>
                     </table>
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    @includeIf('supplier.form')
+    @includeIf('pengeluaran.form')
 @endsection
 
 @push('scripts')
@@ -57,20 +57,20 @@
                     }
                 ],
                 ajax: {
-                    url: '{{ route('supplier.data') }}',
+                    url: '{{ route('pengeluaran.data') }}',
                 },
                 columns: [
                     {data: 'DT_RowIndex', searchable: false, sortable: false},
-                    {data: 'nama'},
-                    {data: 'telepon'},
-                    {data: 'alamat'},
+                    {data: 'tanggal'},
+                    {data: 'deskripsi'},
+                    {data: 'nominal'},
                     {data: 'aksi', searchable: false, sortable: false}
                 ],
             });
 
             // Fokus ke input saat modal ditampilkan
             $('#modal-form').on('shown.bs.modal', function() {
-                $('#nama_Supplier').focus();
+                $('#deskripsi').focus();
             });
 
             $('#modal-form').validator().on('submit', function(e) {
@@ -98,29 +98,28 @@
         // Fungsi untuk membuka modal tambah form
         function addForm(url) {
             $('#modal-form').modal('show'); // Menampilkan modal
-            $('#modal-form .modal-title').text('Tambah Supplier'); // Set judul modal
+            $('#modal-form .modal-title').text('Tambah Pengeluaran'); // Set judul modal
 
             $('#modal-form form')[0].reset(); // Reset form pada modal
             $('#modal-form form').attr('action', url); // Set URL form action dengan URL pada parameter
             $('#modal-form [name=_method]').val('post'); // Isi value dari input [name=_method] dengan 'post'
-            $('#modal-form [name=nama]').focus(); // Fokus ke input [name=nama]
+            $('#modal-form [name=deskripsi]').focus(); // Fokus ke input [name=deskripsi]
         }
 
         // Fungsi untuk membuka modal edit form
         function editForm(url) {
             $('#modal-form').modal('show'); // Menampilkan modal
-            $('#modal-form .modal-title').text('Edit Supplier'); // Set judul modal
+            $('#modal-form .modal-title').text('Edit Pengeluaran'); // Set judul modal
 
             $('#modal-form form')[0].reset(); // Reset form pada modal
             $('#modal-form form').attr('action', url); // Set URL form action dengan URL pada parameter
             $('#modal-form [name=_method]').val('put'); // Isi value dari input [name=_method] dengan 'post'
-            $('#modal-form [name=nama]').focus(); // Fokus ke input [name=nama]
+            $('#modal-form [name=deskripsi]').focus(); // Fokus ke input [name=deskripsi]
 
             $.get(url) // Ambil data dari URL pada parameter
                 .done((response) => {
-                    $('#modal-form [name=nama]').val(response.nama);
-                    $('#modal-form [name=telepon]').val(response.telepon);
-                    $('#modal-form [name=alamat]').val(response.alamat);
+                    $('#modal-form [name=deskripsi]').val(response.deskripsi);
+                    $('#modal-form [name=nominal]').val(response.nominal);
                 })
                 .fail((errors) => {
                     console.log(errors);
