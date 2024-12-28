@@ -70,7 +70,7 @@
 
             // Fokus ke input saat modal ditampilkan
             $('#modal-form').on('shown.bs.modal', function() {
-                $('#nama_Supplier').focus();
+                $('#nama').focus();
             });
 
             $('#modal-form').validator().on('submit', function(e) {

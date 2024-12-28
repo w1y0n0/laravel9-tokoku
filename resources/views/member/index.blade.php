@@ -17,7 +17,8 @@
                     <button onclick="addForm('{{ route('member.store') }}')" class="btn btn-success btn-xs btn-flat"
                         data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i>
                         Tambah</button>
-                    <button onclick="cetakMember('{{ route('member.cetakMember') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-id-card"></i> Cetak Member</button>
+                    <button onclick="cetakMember('{{ route('member.cetak_member') }}')"
+                        class="btn btn-info btn-xs btn-flat"><i class="fa fa-id-card"></i> Cetak Member</button>
                 </div>
                 <div class="box-body table-responsive">
                     <form action="" method="post" class="form-member">
@@ -67,14 +68,33 @@
                 ajax: {
                     url: '{{ route('member.data') }}',
                 },
-                columns: [
-                    {data: 'select_all', searchable: false, sortable: false},
-                    {data: 'DT_RowIndex', searchable: false, sortable: false},
-                    {data: 'kode_member'},
-                    {data: 'nama_member'},
-                    {data: 'telepon'},
-                    {data: 'alamat'},
-                    {data: 'aksi', searchable: false, sortable: false}
+                columns: [{
+                        data: 'select_all',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: 'DT_RowIndex',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: 'kode_member'
+                    },
+                    {
+                        data: 'nama_member'
+                    },
+                    {
+                        data: 'telepon'
+                    },
+                    {
+                        data: 'alamat'
+                    },
+                    {
+                        data: 'aksi',
+                        searchable: false,
+                        sortable: false
+                    }
                 ],
             });
 

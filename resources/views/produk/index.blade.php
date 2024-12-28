@@ -16,9 +16,12 @@
                 <div class="box-header with-border">
                     <div class="btn-group">
                         <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"
-                            data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i> Tambah</button>
-                        <button onclick="deleteSelected('{{ route('produk.deleteSelected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
-                        <button onclick="cetakBarcode('{{ route('produk.cetakBarcode') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
+                            data-bs-toggle="modal" data-bs-target="#modal-form"><i class="fa fa-plus-circle"></i>
+                            Tambah</button>
+                        <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')"
+                            class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                        <button onclick="cetakBarcode('{{ route('produk.cetak_barcode') }}')"
+                            class="btn btn-info btn-xs btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
                     </div>
                 </div>
                 <div class="box-body table-responsive">
@@ -73,18 +76,45 @@
                 ajax: {
                     url: '{{ route('produk.data') }}',
                 },
-                columns: [
-                    { data: 'select_all', searchable: false, sortable: false },
-                    { data: 'DT_RowIndex', searchable: false, sortable: false },
-                    { data: 'kode_produk' },
-                    { data: 'nama_produk' },
-                    { data: 'nama_kategori' },
-                    { data: 'merk' },
-                    { data: 'harga_beli' },
-                    { data: 'harga_jual' },
-                    { data: 'diskon' },
-                    { data: 'stok' },
-                    { data: 'aksi', searchable: false, sortable: false },
+                columns: [{
+                        data: 'select_all',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: 'DT_RowIndex',
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: 'kode_produk'
+                    },
+                    {
+                        data: 'nama_produk'
+                    },
+                    {
+                        data: 'nama_kategori'
+                    },
+                    {
+                        data: 'merk'
+                    },
+                    {
+                        data: 'harga_beli'
+                    },
+                    {
+                        data: 'harga_jual'
+                    },
+                    {
+                        data: 'diskon'
+                    },
+                    {
+                        data: 'stok'
+                    },
+                    {
+                        data: 'aksi',
+                        searchable: false,
+                        sortable: false
+                    },
                 ],
             });
 
@@ -117,7 +147,7 @@
                 $(':checkbox').prop('checked', this.checked);
             });
             // $('#select_all').on('click', function() {
-                // $('input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+            // $('input[type="checkbox"]').prop('checked', $(this).prop('checked'));
             // });
         });
 
@@ -203,37 +233,37 @@
         function deleteSelected(url) {
             if ($('input:checked').length > 1) {
                 Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Data yang dihapus tidak dapat dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
+                    title: 'Apakah Anda yakin?',
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.post(url, $('.form-produk').serialize())
-                        .done((response) => {
-                            Swal.fire(
-                                'Terhapus!',
-                                response.message,
-                                'success'
-                            );
-                            table.ajax.reload();
-                        })
-                        .fail((errors) => {
-                            console.log(errors);
-                            Swal.fire(
-                                'Gagal!',
-                                'Tidak dapat menghapus data.',
-                                'error'
-                            );
-                            return;
-                        });
+                            .done((response) => {
+                                Swal.fire(
+                                    'Terhapus!',
+                                    response.message,
+                                    'success'
+                                );
+                                table.ajax.reload();
+                            })
+                            .fail((errors) => {
+                                console.log(errors);
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Tidak dapat menghapus data.',
+                                    'error'
+                                );
+                                return;
+                            });
                     }
                 });
-            }else{
+            } else {
                 // alert('Pilih data yang akan dihapus!');
                 Swal.fire(
                     'Informasi!',

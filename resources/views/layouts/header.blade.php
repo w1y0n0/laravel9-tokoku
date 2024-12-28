@@ -2,9 +2,9 @@
      <!-- Logo -->
      <a href="#" class="logo">
          <!-- mini logo for sidebar mini 50x50 pixels -->
-         <span class="logo-mini"><b>POS</b></span>
+         <span class="logo-mini"><b>TK</b></span>
          <!-- logo for regular state and mobile devices -->
-         <span class="logo-lg"><b>P</b>oint <b>O</b>f <b>S</b>ale</span>
+         <span class="logo-lg">{{ config('app.name') }}</span>
      </a>
      <!-- Header Navbar: style can be found in header.less -->
      <nav class="navbar navbar-static-top">

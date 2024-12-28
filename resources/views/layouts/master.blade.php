@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" />
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
@@ -47,6 +49,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/preloader.css') }}">
+    @stack('css')
 </head>
 
 <body class="hold-transition skin-purple-light sidebar-mini">
@@ -130,6 +133,15 @@
     <script src="{{ asset('js/validator.min.js') }}"></script>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
 
     <!-- Preloader -->
     <script>
