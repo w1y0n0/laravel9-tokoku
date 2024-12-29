@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -22,6 +23,7 @@ class MemberController extends Controller
     public function data()
     {
         $member = Member::orderBy('kode_member')->get();
+
         return datatables()
             ->of($member)
             ->addIndexColumn()
@@ -138,7 +140,9 @@ class MemberController extends Controller
             $datamember[] = $member;
         }
         $datamember = $datamember->chunk(2);
-        return view('member.cetak', compact('datamember'));
+        $setting    = Setting::first();
+        // return $setting;
+        return view('member.cetak', compact('datamember', 'setting'));
 
         // $no  = 1;
         // $pdf = PDF::loadView('member.cetak', compact('datamember', 'no'));

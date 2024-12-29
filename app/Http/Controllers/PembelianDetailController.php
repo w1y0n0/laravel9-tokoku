@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembelian;
 use App\Models\PembelianDetail;
 use App\Models\Produk;
 use App\Models\Supplier;
@@ -14,13 +15,15 @@ class PembelianDetailController extends Controller
         $id_pembelian = session('id_pembelian');
         $produk = Produk::orderBy('nama_produk')->get();
         $supplier = Supplier::find(session('id_supplier'));
+        $diskon = Pembelian::find($id_pembelian)->diskon ?? 0;
         // return $id_pembelian . '-' . session('id_supplier');
+        // return $diskon;
 
         if(! $supplier){
             abort(404);
         }
 
-        return view('pembelian_detail.index', compact('id_pembelian', 'produk', 'supplier'));
+        return view('pembelian_detail.index', compact('id_pembelian', 'produk', 'supplier', 'diskon'));
     }
 
     // Method untuk menampilkan data pembelian detail

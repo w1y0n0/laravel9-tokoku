@@ -146,10 +146,10 @@
                     @foreach ($data as $item)
                         <td class="text-center">
                             <div class="box">
-                                <img src="{{ asset('img/member.png') }}" alt="card">
+                                <img src="{{ asset($setting->path_kartu_member) }}" alt="card">
                                 <div class="logo">
-                                    <p>{{ config('app.name') }}</p>
-                                    <img src="{{ asset('img/logo.png') }}" alt="logo">
+                                    <p>{{ $setting->nama_perusahaan }}</p>
+                                    <img src="{{ asset($setting->path_logo) }}" alt="logo">
                                 </div>
                                 <div class="nama">{{ $item->nama_member }}</div>
                                 <div class="telepon">{{ $item->telepon }}</div>
