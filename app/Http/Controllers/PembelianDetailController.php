@@ -127,7 +127,7 @@ class PembelianDetailController extends Controller
             'totalrp' => format_uang($total),
             'bayar' => $bayar,
             'bayarrp' => format_uang($bayar),
-            'terbilang' => ucwords(terbilang($bayar). ' Rupiah')
+            'terbilang' => $bayar == 0 ? 'Nol Rupiah' : ucwords(terbilang($bayar) . ' Rupiah')
         ];
         return response()->json($data);
     }
