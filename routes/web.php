@@ -9,6 +9,7 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PenjualanDetailController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -78,3 +79,7 @@ Route::get('/laporan/pdf/{awal}/{akhir}', [LaporanController::class, 'exportPDF'
 
 Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
 Route::resource('/user', UserController::class);
+
+Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
+Route::get('/setting/first', [SettingController::class, 'show'])->name('setting.show');
+Route::post('/setting', [SettingController::class, 'update'])->name('setting.update');
