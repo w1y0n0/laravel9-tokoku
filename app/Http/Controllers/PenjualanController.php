@@ -17,7 +17,10 @@ class PenjualanController extends Controller
     }
     public function data()
     {
-        $penjualan = Penjualan::orderBy('id_penjualan', 'desc')->get();
+        // $penjualan = Penjualan::orderBy('id_penjualan', 'desc')->get();
+        // $penjualan = Penjualan::with('member')->orderBy('id_penjualan', 'desc')->get();
+        $penjualan = Penjualan::with(['member', 'user'])->orderBy('id_penjualan', 'desc')->get();
+        // return $penjualan;
 
         return datatables()
             ->of($penjualan)
@@ -35,7 +38,9 @@ class PenjualanController extends Controller
                 return tanggal_indonesia($penjualan->created_at, false);
             })
             ->addColumn('kode_member', function ($penjualan) {
-                return '<span class="label label-success">'. $penjualan->member['kode_member'] ?? '' .'</spa>';
+                $member = $penjualan->member->kode_member ?? '';
+
+                return '<span class="label label-success">'. $member .'</spa>';
             })
             ->editColumn('diskon', function ($penjualan) {
                 return $penjualan->diskon . '%';
@@ -65,7 +70,7 @@ class PenjualanController extends Controller
         $penjualan->diskon = 0;
         $penjualan->bayar = 0;
         $penjualan->diterima = 0;
-        $penjualan->id_user = 1; //auth()->id;
+        $penjualan->id_user = 2; //auth()->id; // 1=administrator, 2=kasir
         $penjualan->save();
 
         session(['id_penjualan' => $penjualan->id_penjualan]);

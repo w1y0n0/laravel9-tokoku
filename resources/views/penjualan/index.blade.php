@@ -40,6 +40,15 @@
         table = $('.table-penjualan').DataTable({
             processing: true,
             autoWidth: false,
+            responsive: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print',
+                {
+                    extend: 'colvis',
+                    text: 'Atur Kolom',
+                }
+            ],
             ajax: {
                 url: '{{ route('penjualan.data') }}',
             },
@@ -57,8 +66,10 @@
         });
         table1 = $('.table-detail').DataTable({
             processing: true,
+            autoWidth: false,
+            responsive: true,
             bSort: false,
-            dom: 'Brt',
+            dom: 'rt',
             columns: [
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'kode_produk'},
