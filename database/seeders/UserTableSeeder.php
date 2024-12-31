@@ -19,13 +19,15 @@ class UserTableSeeder extends Seeder
             [
                 'name' => 'Administrator',
                 'email' => 'admin@gmail.com',
+                'username' => 'admin',
                 'password' => bcrypt('123'),
                 'foto' => '/img/user.jpg',
                 'level' => 1
             ],
             [
-                'name' => 'Kasir 1',
-                'email' => 'kasir1@gmail.com',
+                'name' => 'Kasir',
+                'email' => 'kasir@gmail.com',
+                'username' => 'kasir',
                 'password' => bcrypt('123'),
                 'foto' => '/img/user.jpg',
                 'level' => 2
@@ -34,7 +36,7 @@ class UserTableSeeder extends Seeder
 
         array_map(function (array $user) {
             User::query()->updateOrCreate(
-                ['email' => $user['email']],
+                ['email' => $user['email'], 'username' => $user['username']],
                 $user
             );
         }, $users);

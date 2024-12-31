@@ -60,8 +60,7 @@
     <br>
     <div>
         <p style="float: left;">{{ date('d-m-Y') }}</p>
-        <p style="float: right">{{ strtoupper('Ratna Sari Dewi') }}</p>
-        {{-- <p style="float: right">{{ strtoupper(auth()->user()->name) }}</p> --}}
+        <p style="float: right">{{ strtoupper(auth()->user()->name) }}</p>
     </div>
     <div class="clear-both" style="clear: both;"></div>
     <p>No: {{ tambah_nol_didepan($penjualan->id_penjualan, 10) }}</p>

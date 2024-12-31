@@ -8,6 +8,7 @@ use App\Models\Produk;
 use App\Models\Setting;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PenjualanController extends Controller
 {
@@ -70,7 +71,7 @@ class PenjualanController extends Controller
         $penjualan->diskon = 0;
         $penjualan->bayar = 0;
         $penjualan->diterima = 0;
-        $penjualan->id_user = 2; //auth()->id; // 1=administrator, 2=kasir
+        $penjualan->id_user = Auth::user()->id; //auth()->id; // 1=administrator, 2=kasir
         $penjualan->save();
 
         session(['id_penjualan' => $penjualan->id_penjualan]);

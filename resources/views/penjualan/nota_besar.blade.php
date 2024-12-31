@@ -106,8 +106,7 @@
                 Kasir
                 <br>
                 <br>
-                Arif Rahman Hakim
-                {{-- {{ auth()->user()->name }} --}}
+                {{ auth()->user()->name }}
             </td>
         </tr>
     </table>
