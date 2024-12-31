@@ -18,43 +18,27 @@
                  <!-- User Account: style can be found in dropdown.less -->
                  <li class="dropdown user user-menu">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                         <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image"
-                             alt="User Image">
-                         <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                         <img src="{{ url(auth()->user()->foto) }}" class="user-image" alt="User Image">
+                         <span class="hidden-xs">{{ auth()->user()->name }}</span>
                      </a>
                      <ul class="dropdown-menu">
                          <!-- User image -->
                          <li class="user-header">
-                             <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle"
-                                 alt="User Image">
+                             <img src="{{ url(auth()->user()->foto) }}" class="img-circle img-profil" alt="User Image">
 
                              <p>
-                                 {{ Auth::user()->name }}
-                                 {{-- <small>Member since Nov. 2012</small> --}}
+                                 {{ auth()->user()->name }}
+                                 <small>[ {{ auth()->user()->username }} | {{ auth()->user()->email }} ]</small>
                              </p>
                          </li>
-                         <!-- Menu Body -->
-                         {{-- <li class="user-body"> --}}
-                             {{-- <div class="row">
-                                 <div class="col-xs-4 text-center">
-                                     <a href="#">Followers</a>
-                                 </div>
-                                 <div class="col-xs-4 text-center">
-                                     <a href="#">Sales</a>
-                                 </div>
-                                 <div class="col-xs-4 text-center">
-                                     <a href="#">Friends</a>
-                                 </div>
-                             </div> --}}
-                             <!-- /.row -->
-                         {{-- </li> --}}
+
                          <!-- Menu Footer-->
                          <li class="user-footer">
                              <div class="pull-left">
-                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                 <a href="{{ route('user.profil') }}" class="btn btn-default btn-flat">Profil</a>
                              </div>
                              <div class="pull-right">
-                                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat">Logout</a>
+                                 <a href="#" class="btn btn-default btn-flat" id="logout-button">Keluar</a>
                              </div>
                          </li>
                      </ul>
@@ -63,3 +47,7 @@
          </div>
      </nav>
  </header>
+
+ <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
+     @csrf
+ </form>

@@ -25,12 +25,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route untuk user yang sudah login (auth)
-// Route::middleware(['auth:web'])->group(function () {
-//     Route::controller(AuthController::class)->group(function () {
-//         Route::get('/logout', 'logout')->name('logout');
-//     });
-// });
+
 // Routes untuk user belum login (guest)
 Route::middleware(['guest:web'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
@@ -41,7 +36,7 @@ Route::middleware(['guest:web'])->group(function () {
 // Route untuk user yang sudah login (auth)
 Route::group(['middleware' => 'auth'], function () {
     Route::controller(AuthController::class)->group(function () {
-        Route::get('/logout', 'logout')->name('logout');
+        Route::post('/logout', 'logout')->name('logout');
     });
 
     Route::get('/', function () {
@@ -111,5 +106,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/laporan/data/{awal}/{akhir}', [LaporanController::class, 'data'])->name('laporan.data');
         Route::get('/laporan/pdf/{awal}/{akhir}', [LaporanController::class, 'exportPDF'])->name('laporan.export_pdf');
+        // PROFIL
+        Route::get('/profil', [UserController::class, 'profil'])->name('user.profil');
+        Route::post('/profil', [UserController::class, 'updateProfil'])->name('user.update_profil');
     });
 });

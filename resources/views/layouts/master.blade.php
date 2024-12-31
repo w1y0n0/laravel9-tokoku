@@ -83,7 +83,7 @@
                 </h1>
                 <ol class="breadcrumb">
                     @section('breadcrumb')
-                        <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Home</a></li>
                     @show
                 </ol>
             </section>
@@ -133,7 +133,7 @@
     <script src="{{ asset('js/validator.min.js') }}"></script>
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-    @if(session('success'))
+    @if (session('success'))
         <script>
             Swal.fire({
                 icon: 'success',
@@ -142,6 +142,26 @@
             });
         </script>
     @endif
+    <script>
+        document.getElementById('logout-button').addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah aksi default tombol
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan keluar dari aplikasi!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#00a65a',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Keluar',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit(); // Submit form jika konfirmasi
+                }
+            });
+        });
+    </script>
 
     <!-- Preloader -->
     <script>
