@@ -17,10 +17,20 @@
                     enctype="multipart/form-data">
                     @csrf
                     <div class="box-body">
-                        <div class="alert alert-success alert-dismissible" style="display: none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="icon fa fa-check"></i> Perubahan berhasil disimpan
+                        <div class="alert alert-success alert-dismissible" id="toast-success" role="alert" aria-live="assertive"
+                            aria-atomic="true"
+                             style="position: fixed; bottom: 20px; right: 0; transform: translateX(-10%) translateY(-10%); z-index: 1055; display: none; max-width: 100%;">
+                            <div class="toast-header">
+                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4><i class="icon fa fa-check"></i> Berhasil!</h4>
+                            </div>
+                            <div class="toast-body">
+                                Perubahan berhasil disimpan
+                            </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="name" class="col-lg-2 control-label">Nama</label>
                             <div class="col-lg-6">
@@ -97,9 +107,16 @@
                             $('.tampil-foto').html(
                                 `<img src="{{ url('/') }}${response.foto}" width="200">`);
                             $('.img-profil').attr('src', `{{ url('/') }}/${response.foto}`);
-                            $('.alert').fadeIn();
+
+                            // Tampilkan toast
+                            const toastSuccess = $('#toast-success');
+                            toastSuccess.fadeIn();
                             setTimeout(() => {
-                                $('.alert').fadeOut();
+                                toastSuccess.fadeOut();
+                            }, 3000);
+                            // reload halaman
+                            setTimeout(() => {
+                                location.reload();
                             }, 3000);
                         })
                         .fail(errors => {

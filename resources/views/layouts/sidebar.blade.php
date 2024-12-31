@@ -4,7 +4,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ url(auth()->user()->foto) }}" class="img-circle" alt="User Image">
+                <img src="{{ url(auth()->user()->foto) ?? '' }}" class="img-circle img-profil" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ auth()->user()->name }}</p>
@@ -16,12 +16,12 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li>
-                <a href="/home">
+                <a href="/dashboard">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
 
-            @if (Auth::user()->level == '1')
+            @if (auth()->user()->level == '1')
                 <li class="header">MASTER</li>
                 <li>
                     <a href="{{ route('kategori.index') }}">
@@ -43,9 +43,7 @@
                         <i class="fa fa-truck"></i> <span>Supplier</span>
                     </a>
                 </li>
-            @endif
 
-            @if (Auth::user()->level == '1' || Auth::user()->level == '2')
                 <li class="header">TRANSAKSI</li>
                 <li>
                     <a href="{{ route('pengeluaran.index') }}">
@@ -79,9 +77,7 @@
                         <i class="fa fa-file-pdf-o"></i> <span>Laporan</span>
                     </a>
                 </li>
-            @endif
-
-            @if (Auth::user()->level == '1')
+                
                 <li class="header">UTILITY</li>
                 <li>
                     <a href="{{ route('user.index') }}">
@@ -91,6 +87,17 @@
                 <li>
                     <a href="{{ route('setting.index') }}">
                         <i class="fa fa-cogs"></i> <span>Pengaturan</span>
+                    </a>
+                </li>
+            @else
+                <li>
+                    <a href="{{ route('transaksi.index') }}">
+                        <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Aktif</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('transaksi.baru') }}">
+                        <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
                     </a>
                 </li>
             @endif

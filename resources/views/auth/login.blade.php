@@ -10,7 +10,7 @@
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
-            <p class="login-box-msg"><strong>{{ $setting->nama_perusahaan }}</strong></p>
+            {{-- <p class="login-box-msg"><strong>{{ $setting->nama_perusahaan }}</strong></p> --}}
 
             @if (session('message'))
                 <div class="alert alert-success alert-dismissible">
@@ -60,7 +60,13 @@
                 </div>
             </form>
 
+            <div class="login-box-footer" style="margin-top: 20px;">
+                <center>
+                    <p>© {{ date('Y') }} <strong>{{ $setting->nama_perusahaan }}</strong>. All Rights Reserved.</p>
+                </center>
+            </div>
         </div>
         <!-- /.login-box-body -->
+
     </div>
 @endsection

@@ -3,6 +3,7 @@
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PembelianDetailController;
@@ -39,15 +40,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/logout', 'logout')->name('logout');
     });
 
-    Route::get('/', function () {
-        return view('home');
-    });
+    Route::redirect('/', '/dashboard');
+    Route::redirect('/home', '/dashboard');
 
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::group(['middleware' => ['cekuserlogin:1']], function () {
+    Route::group(['middleware' => ['level:1']], function () {
         // KATEGORI
         Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
         Route::resource('/kategori', KategoriController::class);
@@ -63,16 +61,6 @@ Route::group(['middleware' => 'auth'], function () {
         // SUPPLIER
         Route::get('/supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
         Route::resource('/supplier', SupplierController::class);
-        // USER
-        Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
-        Route::resource('/user', UserController::class);
-        // SETTING
-        Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
-        Route::get('/setting/first', [SettingController::class, 'show'])->name('setting.show');
-        Route::post('/setting', [SettingController::class, 'update'])->name('setting.update');
-    });
-
-    Route::group(['middleware' => ['cekuserlogin:1,2']], function () {
         // PENGELUARAN
         Route::get('/pengeluaran/data', [PengeluaranController::class, 'data'])->name('pengeluaran.data');
         Route::resource('/pengeluaran', PengeluaranController::class);
@@ -91,6 +79,20 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
         Route::get('/penjualan/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
         Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+        // LAPORAN
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+        Route::get('/laporan/data/{awal}/{akhir}', [LaporanController::class, 'data'])->name('laporan.data');
+        Route::get('/laporan/pdf/{awal}/{akhir}', [LaporanController::class, 'exportPDF'])->name('laporan.export_pdf');
+        // USER
+        Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
+        Route::resource('/user', UserController::class);
+        // SETTING
+        Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
+        Route::get('/setting/first', [SettingController::class, 'show'])->name('setting.show');
+        Route::post('/setting', [SettingController::class, 'update'])->name('setting.update');
+    });
+
+    Route::group(['middleware' => ['level:1,2']], function () {
         // TRANSAKSI
         Route::get('/transaksi/baru', [PenjualanController::class, 'create'])->name('transaksi.baru');
         Route::post('/transaksi/simpan', [PenjualanController::class, 'store'])->name('transaksi.simpan');
@@ -102,10 +104,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/transaksi/loadform/{diskon}/{total}/{diterima}', [PenjualanDetailController::class, 'loadForm'])->name('transaksi.load_form');
         Route::resource('/transaksi', PenjualanDetailController::class)
             ->except('create', 'show', 'edit');
-        // LAPORAN
-        Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
-        Route::get('/laporan/data/{awal}/{akhir}', [LaporanController::class, 'data'])->name('laporan.data');
-        Route::get('/laporan/pdf/{awal}/{akhir}', [LaporanController::class, 'exportPDF'])->name('laporan.export_pdf');
         // PROFIL
         Route::get('/profil', [UserController::class, 'profil'])->name('user.profil');
         Route::post('/profil', [UserController::class, 'updateProfil'])->name('user.update_profil');

@@ -34,14 +34,14 @@ class AuthController extends Controller
             $user = Auth::user();
             
             if ($user) {
-                return redirect()->intended('/');
+                return redirect()->intended('dashboard');
             }
 
             return redirect()->intended('login');
         } else {
-            return back()->withErrors([
+            return redirect()->back()->withErrors([
                 'username' => 'Username atau password salah'
-            ]);
+            ])->withInput();
         }
     }
 
