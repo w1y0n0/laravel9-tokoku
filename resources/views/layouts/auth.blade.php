@@ -68,6 +68,8 @@
     <script src="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- iCheck -->
     <script src="{{ asset('AdminLTE-2/plugins/iCheck/icheck.min.js') }}"></script>
+    <!-- Validator -->
+    <script src="{{ asset('js/validator.min.js') }}"></script>
     <script>
         $(function() {
             $('input').iCheck({
@@ -76,6 +78,7 @@
                 increaseArea: '20%' /* optional */
             });
         });
+        $('.form-login').validator();
     </script>
 </body>
 

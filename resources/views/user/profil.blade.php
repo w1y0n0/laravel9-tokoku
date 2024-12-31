@@ -22,7 +22,7 @@
                             <i class="icon fa fa-check"></i> Perubahan berhasil disimpan
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-lg-2 col-lg-offset-1 control-label">Nama</label>
+                            <label for="name" class="col-lg-2 control-label">Nama</label>
                             <div class="col-lg-6">
                                 <input type="text" name="name" class="form-control" id="name" required autofocus
                                     value="{{ $profil->name }}">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="foto" class="col-lg-2 col-lg-offset-1 control-label">Profil</label>
+                            <label for="foto" class="col-lg-2 control-label">Profil</label>
                             <div class="col-lg-4">
                                 <input type="file" name="foto" class="form-control" id="foto"
                                     onchange="preview('.tampil-foto', this.files[0])">
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="old_password" class="col-lg-2 col-lg-offset-1 control-label">Password Lama</label>
+                            <label for="old_password" class="col-lg-2 control-label">Password Lama</label>
                             <div class="col-lg-6">
                                 <input type="password" name="old_password" id="old_password" class="form-control"
                                     minlength="6">
@@ -50,14 +50,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password" class="col-lg-2 col-lg-offset-1 control-label">Password</label>
+                            <label for="password" class="col-lg-2 control-label">Password</label>
                             <div class="col-lg-6">
                                 <input type="password" name="password" id="password" class="form-control" minlength="6">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password_confirmation" class="col-lg-2 col-lg-offset-1 control-label">Konfirmasi
+                            <label for="password_confirmation" class="col-lg-2 control-label">Konfirmasi
                                 Password</label>
                             <div class="col-lg-6">
                                 <input type="password" name="password_confirmation" id="password_confirmation"
