@@ -139,14 +139,16 @@ class MemberController extends Controller
             $member = Member::find($id);
             $datamember[] = $member;
         }
+
         $datamember = $datamember->chunk(2);
         $setting    = Setting::first();
         // return $setting;
-        return view('member.cetak', compact('datamember', 'setting'));
+        // return view('member.cetak', compact('datamember', 'setting'));
 
-        // $no  = 1;
-        // $pdf = PDF::loadView('member.cetak', compact('datamember', 'no'));
-        // $pdf->setPaper(array(0, 0, 566.93, 850.39), 'potrait');
-        // return $pdf->stream('member.pdf');
+        $no  = 1;
+        // return view('member.cetakpdf', compact('datamember', 'no', 'setting'));
+        $pdf = PDF::loadView('member.cetakpdf', compact('datamember', 'no', 'setting'));
+        $pdf->setPaper(array(0, 0, 566.93, 850.39), 'potrait');
+        return $pdf->stream('cetak-kartu-member.pdf');
     }
 }
