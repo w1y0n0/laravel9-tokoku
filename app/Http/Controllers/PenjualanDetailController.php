@@ -83,10 +83,13 @@ class PenjualanDetailController extends Controller
     public function store(Request $request)
     {
         $produk = Produk::where('id_produk', $request->id_produk)->first();
+
         if (! $produk) {
             return response()->json('Data gagal disimpan', 400);
         }
+
         $detail = new PenjualanDetail();
+
         $detail->id_penjualan = $request->id_penjualan;
         $detail->id_produk = $produk->id_produk;
         $detail->harga_jual = $produk->harga_jual;
@@ -94,14 +97,17 @@ class PenjualanDetailController extends Controller
         $detail->diskon = 0;
         $detail->subtotal = $produk->harga_jual;
         $detail->save();
+
         return response()->json('Data berhasil disimpan', 200);
     }
 
     public function update(Request $request, $id)
     {
         $detail = PenjualanDetail::find($id);
+
         $detail->jumlah = $request->jumlah;
         $detail->subtotal = $detail->harga_jual * $request->jumlah;
+
         $detail->update();
     }
 
@@ -109,10 +115,11 @@ class PenjualanDetailController extends Controller
     {
         $detail = PenjualanDetail::find($id);
         $detail->delete();
+
         return response(null, 204);
     }
 
-    public function loadForm($diskon = 0, $total, $diterima)
+    public function loadForm($diskon = 0, $total = 0, $diterima = 0)
     {
         $bayar   = $total - ($diskon / 100 * $total);
         $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
