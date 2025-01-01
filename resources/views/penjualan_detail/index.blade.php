@@ -145,8 +145,10 @@
 @push('scripts')
 <script>
     let table, table2;
+
     $(function () {
         $('body').addClass('sidebar-collapse');
+
         table = $('.table-penjualan').DataTable({
             processing: true,
             autoWidth: false,
@@ -166,6 +168,7 @@
             ],
             dom: 'rt',
             bSort: false,
+            paginate: false,
         })
         .on('draw.dt', function () {
             loadForm($('#diskon').val());
@@ -173,20 +176,25 @@
                 $('#diterima').trigger('input');
             }, 300);
         });
+
         table2 = $('.table-produk').DataTable();
+
         $(document).on('input', '.quantity', function () {
             let id = $(this).data('id');
             let jumlah = parseInt($(this).val());
+
             if (jumlah < 1) {
                 $(this).val(1);
                 alert('Jumlah tidak boleh kurang dari 1');
                 return;
             }
+
             if (jumlah > 10000) {
                 $(this).val(10000);
                 alert('Jumlah tidak boleh lebih dari 10000');
                 return;
             }
+
             $.post(`{{ url('/transaksi') }}/${id}`, {
                     '_token': $('[name=csrf-token]').attr('content'),
                     '_method': 'put',
@@ -202,12 +210,14 @@
                     return;
                 });
         });
+
         $(document).on('input', '#diskon', function () {
             if ($(this).val() == "") {
                 $(this).val(0).select();
             }
             loadForm($(this).val());
         });
+
         $('#diterima').on('input', function () {
             if ($(this).val() == "") {
                 $(this).val(0).select();
@@ -216,22 +226,27 @@
         }).focus(function () {
             $(this).select();
         });
+
         $('.btn-simpan').on('click', function () {
             $('.form-penjualan').submit();
         });
     });
+
     function tampilProduk() {
         $('#modal-produk').modal('show');
     }
+
     function hideProduk() {
         $('#modal-produk').modal('hide');
     }
+
     function pilihProduk(id, kode) {
         $('#id_produk').val(id);
         $('#kode_produk').val(kode);
         hideProduk();
         tambahProduk();
     }
+
     function tambahProduk() {
         $.post('{{ route('transaksi.store') }}', $('.form-produk').serialize())
             .done(response => {
@@ -243,9 +258,11 @@
                 return;
             });
     }
+
     function tampilMember() {
         $('#modal-member').modal('show');
     }
+
     function pilihMember(id, kode) {
         $('#id_member').val(id);
         $('#kode_member').val(kode);
@@ -254,9 +271,11 @@
         $('#diterima').val(0).focus().select();
         hideMember();
     }
+
     function hideMember() {
         $('#modal-member').modal('hide');
     }
+
     function deleteData(url) {
         if (confirm('Yakin ingin menghapus data terpilih?')) {
             $.post(url, {
@@ -272,9 +291,11 @@
                 });
         }
     }
+
     function loadForm(diskon = 0, diterima = 0) {
         $('#total').val($('.total').text());
         $('#total_item').val($('.total_item').text());
+
         $.get(`{{ url('/transaksi/loadform') }}/${diskon}/${$('.total').text()}/${diterima}`)
             .done(response => {
                 $('#totalrp').val('Rp. '+ response.totalrp);

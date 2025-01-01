@@ -49,6 +49,8 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/preloader.css') }}">
+
+    <!-- Custom CSS dari tiap view (jika ada) -->
     @stack('css')
 </head>
 
@@ -186,6 +188,7 @@
         }
     </script>
 
+    <!-- Custom JS dari tiap view (jika ada) -->
     @stack('scripts')
 </body>
 
