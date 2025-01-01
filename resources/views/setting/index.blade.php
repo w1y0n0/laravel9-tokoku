@@ -112,6 +112,10 @@
                             setTimeout(() => {
                                 $('.alert').fadeOut();
                             }, 3000);
+                            // reload halaman
+                            setTimeout(() => {
+                                location.reload();
+                            }, 3000);
                         })
                         .fail(errors => {
                             alert('Tidak dapat menyimpan data');
