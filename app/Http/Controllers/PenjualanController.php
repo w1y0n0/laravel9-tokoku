@@ -136,6 +136,7 @@ class PenjualanController extends Controller
             $produk = Produk::find($item->id_produk);
             if ($produk) {
                 $produk->stok += $item->jumlah;
+                $produk->update();
             }
             
             $item->delete();
