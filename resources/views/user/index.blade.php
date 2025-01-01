@@ -37,10 +37,13 @@
 @push('scripts')
 <script>
     let table;
+    
     $(function () {
         table = $('.table').DataTable({
             processing: true,
             autoWidth: false,
+            responsive: true,
+            serverSide: true,
             ajax: {
                 url: '{{ route('user.data') }}',
             },

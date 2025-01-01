@@ -46,6 +46,7 @@
                 lengthChange: false,
                 autoWidth: false,
                 responsive: true,
+                serverSide: true,
                 dom: 'Bfrtip',
                 buttons: [
                     'copy', 'csv', 'excel', 'pdf', 'print',
